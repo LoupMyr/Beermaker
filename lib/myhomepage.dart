@@ -18,9 +18,23 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [Image.asset('lib/assets/beermakerlogo350.png')],
-        title: const Text('Outils de fabrication'),
-        centerTitle: true,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  child: Image.asset('lib/assets/beermakerlogo350.png'),
+                ),
+                Padding(padding: EdgeInsets.all(5)),
+                const Text('BeerMaker'),
+              ],
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(

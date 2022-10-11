@@ -53,7 +53,7 @@ class Recette {
 //red.toHexString(red);
     String gg = green.toRadixString(16);
     String bb = blue.toRadixString(16);
-    String rgb = "#";
+    String rgb = "0xFF";
     if (rr.length < 2) {
       rr = "0" + rr;
     } else if (gg.length < 2) {

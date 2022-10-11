@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/strings.dart';
 
@@ -29,6 +30,20 @@ class EtapesPageState extends State<EtapesPage> {
     }
   }
 
+  void goFirstPage() {
+    if (_i != 0) {
+      _i = 0;
+      page();
+    }
+  }
+
+  void goLastPage() {
+    if (_i != 8) {
+      _i = 8;
+      page();
+    }
+  }
+
   IconButton buttonNext() {
     IconButton result = const IconButton(onPressed: null, icon: Icon(null));
     if (_i != 8) {
@@ -55,6 +70,32 @@ class EtapesPageState extends State<EtapesPage> {
     return result;
   }
 
+  IconButton buttonFirst() {
+    IconButton result = const IconButton(onPressed: null, icon: Icon(null));
+    if (_i != 0) {
+      result = IconButton(
+          onPressed: goFirstPage,
+          icon: const Icon(
+            Icons.skip_previous,
+            size: 25,
+          ));
+    }
+    return result;
+  }
+
+  IconButton buttonLast() {
+    IconButton result = const IconButton(onPressed: null, icon: Icon(null));
+    if (_i != 8) {
+      result = IconButton(
+          onPressed: goLastPage,
+          icon: const Icon(
+            Icons.skip_next,
+            size: 25,
+          ));
+    }
+    return result;
+  }
+
   void page() {
     setState(() {
       switch (_i) {
@@ -65,10 +106,12 @@ class EtapesPageState extends State<EtapesPage> {
         case 1:
           _titre = Strings.titre1;
           _text = Strings.texte1;
+
           break;
         case 2:
           _titre = Strings.titre2;
           _text = Strings.texte2;
+
           break;
         case 3:
           _titre = Strings.titre3;
@@ -102,7 +145,23 @@ class EtapesPageState extends State<EtapesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Etapes de fabrication'),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.10,
+                  height: MediaQuery.of(context).size.height * 0.10,
+                  child: Image.asset('lib/assets/beermakerlogo350.png'),
+                ),
+                const Padding(padding: EdgeInsets.all(5)),
+                const Text('Etapes de fabrication'),
+              ],
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -120,8 +179,10 @@ class EtapesPageState extends State<EtapesPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            buttonFirst(),
             buttonPrevious(),
             buttonNext(),
+            buttonLast(),
           ],
         ),
       ),
