@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_3/api.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'package:flutter_application_3/calculs.dart';
 import 'package:flutter_application_3/recette.dart';
 import 'package:flutter_application_3/strings.dart';
@@ -71,7 +72,7 @@ class OutilsPageState extends State<OutilsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ElevatedButton(
-                onPressed: () => Api.saveRecette(),
+                onPressed: () => saveRecette(),
                 child: const Text('Enregistrer'),
               ),
             ],
@@ -79,6 +80,28 @@ class OutilsPageState extends State<OutilsPage> {
         ],
       );
     });
+  }
+
+  void saveRecette() {
+    Map<String, dynamic> recettes = new Map();
+    bool recupRecettes = false;
+
+    Future<http.Response> recupConnect(
+        double litreBiere, double degres, double ebc) {
+      return http.post(
+        Uri.parse('https://s3-4428.nuage-peda.fr/Beermaker/public/api/recette'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: convert.jsonEncode(
+          <String, String>{
+            'litreBiere': litreBiere.toString(),
+            'degres': degres.toString(),
+            'ebc': ebc.toString()
+          },
+        ),
+      );
+    }
   }
 
   @override
